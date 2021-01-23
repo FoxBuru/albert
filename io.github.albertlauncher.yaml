@@ -1,0 +1,21 @@
+app-id: io.github.albertlauncher
+runtime: org.kde.Platform
+runtime-version: '5.15'
+default-branch: stable
+sdk: org.kde.Sdk
+command: albert
+modules:
+  - name: albert
+    buildsystem: cmake
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    build-commands:
+      - git submodule add https://github.com/albertlauncher/documentation.git doc
+      - git submodule update --init --recursive
+    sources: 
+      - type: git
+        url: https://github.com/FoxBuru/albert
+        tag: v0.17.2-fixdoc
+        disable-submodules: true
+    

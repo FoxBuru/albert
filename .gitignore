@@ -5,6 +5,7 @@
 /packaging
 /design
 /.albertignore
+/.flatpak-builder
 *.qmlc
 *.jsc
 .DS_Store
