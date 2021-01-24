@@ -1,21 +1,37 @@
 app-id: io.github.albertlauncher
+rename-desktop-file: albert.desktop
 runtime: org.kde.Platform
 runtime-version: '5.15'
 default-branch: stable
 sdk: org.kde.Sdk
 command: albert
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  - --device=dri
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network
+
 modules:
+  - name: muparser
+    buildsystem: cmake
+    builddir: true
+    sources:
+      - type: git
+        url: https://github.com/beltoforion/muparser
+        tag: v2.3.2
   - name: albert
     buildsystem: cmake
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-    build-commands:
-      - git submodule add https://github.com/albertlauncher/documentation.git doc
-      - git submodule update --init --recursive
+      - -DUSE_PYTHON_INCLUDE_DIR=TRUE
+      - -DPYTHON_INCLUDE_DIRS=/usr/include/python3.8;/usr/include/x86_64-linux-gnu/python3.8
     sources: 
       - type: git
         url: https://github.com/FoxBuru/albert
         tag: v0.17.2-fixdoc
-        disable-submodules: true
     
